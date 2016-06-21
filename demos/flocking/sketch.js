@@ -152,24 +152,20 @@ var flockingSketch = function( sketch ) {
 
   sketch.getWeather = function() {
     console.log("Get Weather");
-    sketch.loadJSON('http://api.openweathermap.org/data/2.5/weather?q=NewYork,USA&units=imperial', sketch.gotWeather);
+    sketch.loadJSON('https://api.apixu.com/v1/current.json?key=513d8003c8b348f1a2461629162106&q=NYC', sketch.gotWeather);
   }
 
   sketch.gotWeather = function(weather) {
 
     if (! sketch.getElement("temperature")) return;
 
-    var dir = Number(weather.wind.deg);
-    var windmag = Number(weather.wind.speed);
-    var gustmag;
-    if (weather.wind.gust)
-      gustmag = Number(weather.wind.gust);
-    else
-      gustmag = windmag;
+    var dir = Number(weather.current.wind_degree);
+    var windmag = Number(weather.current.wind_mph);
+    var gustmag = windmag;
  
     // Setup UI
 
-    sketch.getElement("temperature").html(sketch.floor(weather.main.temp)+'&deg;');
+    sketch.getElement("temperature").html(sketch.floor(weather.current.temp_f)+'&deg;');
     sketch.getElement("speed").html("WIND " + windmag + " <small>MPH</small>");
     sketch.getElement("gust").html("GUST " + gustmag + " <small>MPH</small>");
 
